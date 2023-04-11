@@ -1,7 +1,5 @@
 #include "Pad.h"
 
-Pad
-
 void Pad::Render() {
 	//moure el cursor a la posició
 	ConsoleXY(position.x, position.y);

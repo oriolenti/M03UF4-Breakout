@@ -1,2 +1,3 @@
 ﻿  GameManager.cpp
-  Breakout.vcxproj -> C:\Users\VALLSLUNAORIOL.AzureAD\Documents\M03UF4-Breakout\Breakout\x64\Debug\Breakout.exe
+C:\Users\VALLSLUNAORIOL.AzureAD\Documents\M03UF4-Breakout\Breakout\Breakout\GameManager.cpp(106): error C4700: uninitialized local variable 'i' used
+C:\Users\VALLSLUNAORIOL.AzureAD\Documents\M03UF4-Breakout\Breakout\Breakout\GameManager.cpp(117): error C4700: uninitialized local variable 'i' used

@@ -61,7 +61,7 @@ void GameManager::Menu() {
 
 void GameManager::Gameplay() {
 	//START
-	int sleepTime = 16; //in ms
+	int sleepTime = 100; //in ms
 	bool gameplayRunning = true;
 
 	Pad* playerPad = nullptr;
@@ -69,19 +69,29 @@ void GameManager::Gameplay() {
 	std::vector<Wall> walls;
 	std::vector<Brick> bricks;
 
-	InitGameplay(15, 25, playerPad, ball, walls, bricks);
+	InitGameplay(25, 15, &playerPad, &ball, walls, bricks);
 	
-	//UPDATE
+	//---UPDATE
 	while (gameplayRunning) {
-		//Update all objects
-
-		//render all objects
+		//---------- UPDATE
+		ball->Update(walls, bricks, playerPad);
+		//---------- RENDER
 		playerPad->Render();
+
+		for (std::vector<Wall>::iterator it = walls.begin(); it != walls.end(); it++) {
+			it->Render();
+		}
+
+		for (std::vector<Brick>::iterator it = bricks.begin(); it != bricks.end(); it++) {
+			it->Render();
+		}
 
 		//Sleep & clear
 		Sleep(sleepTime);
 		system("cls");
 	}
+
+	ball->Render();
 
 	//END
 }
@@ -92,7 +102,7 @@ void GameManager::InitGameplay(int width, int height, Pad** p, Ball** b, std::ve
 
 	//WALLS
 	//First corner (top left)
-	w.push_back(Wall(WallType::CORNER, Vector2(0, 0)))
+	w.push_back(Wall(WallType::CORNER, Vector2(0, 0)));
 		for (int i = i; i < width - 1; i++)
 			w.push_back(Wall(WallType::HORIZONTAL, Vector2(i, 0)));
 	w.push_back(Wall(WallType::CORNER, Vector2(width - 1, 0)));
@@ -103,15 +113,22 @@ void GameManager::InitGameplay(int width, int height, Pad** p, Ball** b, std::ve
 		}
 	}
 
-	w.push_back(Wall(WallType::CORNER, Vector2(0, height - 1)))
+	w.push_back(Wall(WallType::CORNER, Vector2(0, height - 1)));
 		for (int i = i; i < width - 1; i++)
 			w.push_back(Wall(WallType::HORIZONTAL, Vector2(i, height - 1)));
 	w.push_back(Wall(WallType::CORNER, Vector2(width - 1, height - 1)));
 
 	//BRICKS (3 rows on the top)
-
+	for (int i = 1; i <= 3; i++) //FILES
+	{
+		for (int j = 0; j < width - 1; j++)
+		{
+			brick.push_back(Brick(Vector2(j, i), 1));
+		}
+	}
+	
 	//BALL
-	*b = new Ball()
+	*b = new Ball(Vector2(width / 2, height / 2), Vector2(0, 1), 1);
 }
 
 
